@@ -1,0 +1,90 @@
+#+TITLE: Build log for the space cadet
+[[./space-cadet-logo.png]]
+* Design
+** Principles
+   A thumb cluster + the side keys to be used with hand sides
+** KLE
+   [http://www.keyboard-layout-editor.com/#/gists/8cf0cf258ae6fa748e577d7ed8d71517]
+[[./watch-the-gap.png]]
+* Sourcing the material
+** Switches
+   I ordered 100 tactile gray from [http://www.doyustudio.com] and 100 super-heavy (150g) SPRiTs springs from [http://www.switchtop.com]
+   I will use regular tactile gray for rows R1-R4, while the modded switches will be used for R5
+** Stabilizers
+   It was tricky to find Plate mounted stabs for the spacebar; I ordered a 60% set from
+   [http://www.switchtop.com] and some OEMs from Vincent on AliExpress; he had 3u plate-mounted stabs!
+   Hopefully they fit and I won't need to do any fiddling
+** Case
+   The case is a regular cheap acrylic case from KBDfans; it is 5 deg and I plan to 3dprint some feet to make
+   it level
+** Plate
+   The plate was ordered through [http://www.lasergist.com]; ordered on [2017-11-06 Mon], shipped on [2017-11-08 Wed] and
+   received on [2017-11-29 Wed].  The plate was received in the mail a bit warped; a bit of manipulation to
+   straighten it up made it usable.
+** Controller
+   Teensy 2.0 ordered from [http://www.pjrc.com] on [2017-11-21 Tue], shipped on [2017-11-21 Tue], arrived on
+   [2017-12-04 Mon]
+** Cabling
+   Re-purposing an ethernet cable (I guess it came with the Rogers router)
+** Keycaps
+   Round 5/6 leftovers from ~7bit~
+   Last batch arrived on [2017-12-04 Mon]
+*** Order #1176
+    Order-ID            |Description                |Price|Qt|Pcs| Total
+    HONEYG/SHIFT225/BLUE|SHIFT (row 4, 2.25u)       | 3.00| 1|  1|  3.00
+    HONEYG/SHIFT275/BLUE|SHIFT (row 4, 2.75u)       | 4.00| 1|  1|  4.00
+    HONEYG/R1U100/SPH   |blank key                  | 0.50|13| 13|  6.50
+    HONEYG/R2U100/SPH   |blank key (same as row4)   | 0.50|22| 22| 11.00
+    HONEYG/R3U100/SPH   |blank key                  | 0.50| 9|  9|  4.50
+    HONEYG/R3U100D/SPH  |blank key (deep dish)      | 2.00| 2|  2|  4.00
+    HONEYG/R1U100/BLUE  |blank key                  | 0.50| 1|  1|  0.50
+    HONEYG/R3U125/BLUE  |blank key                  | 1.00|10| 10| 10.00
+    HONEYG/R2U150/BLUE  |blank key                  | 2.00| 3|  3|  6.00
+    HONEYG/R3U175/BLUE  |blank key                  | 2.00| 2|  2|  4.00
+    HONEYG/R3U225/BLUE  |blank key                  | 2.00| 1|  1|  2.00
+    HONEYB/SPACE625/BLUE|Space (6.25u; blue)        | 5.00| 1|  1|  5.00
+    HONEYB/R1U200/BLUE  |blank key (blue)           | 4.00| 1|  1|  4.00
+    HONEYG/R2U100/BLUE  |blank key (same as row4)   | 0.50| 1|  1|  0.50
+    HONEYG/R3U100/BLUE  |blank key                  | 0.50| 6|  6|  3.00
+    HONEYG/R3U150/BLUE  |blank key                  | 1.00| 2|  2|  2.00
+    HONEYB/SHIFT125/BLUE|SHIFT (row 4, 1.25u)       | 3.00| 2|  2|  6.00
+    HONEYB/SPACE300/BLUE|Space (3u; blue)           | 8.00| 1|  1|  8.00
+    HONEYB/R3U100D/BLUE |blank key (blue; deep dish)| 3.00| 2|  2|  6.00
+
+* Programming the controller
+** Tools for flashing
+   There is a CLI interface available at [https://github.com/PaulStoffregen/teensy_loader_cli] and a GUI at
+   [https://www.pjrc.com/teensy/loader_linux.html]; unclear if the sources are available
+** Emerging the cross-compilation
+   Following the guide at [https://wiki.gentoo.org/wiki/Arduino#Install_the_toolchain_using_crossdev]
+   We need to set up a cross-compilation environment; this can be done by emerging the package
+   ~sys-devel/crossdev~, which seems to be just a wrapper script to emerge the right things
+   Let us see if this actually works; after emerging one supposedly has to run
+   #+BEGIN_SRC sh
+   crossdev -s4 --stable --portage --verbose --target avr
+   #+END_SRC
+   and everything should be emerged…
+   It FAILS, claiming that the avr-gcc cannot create executables; the workaround described in
+    [https://bugs.gentoo.org/147155#c14] works
+    #+BEGIN_SRC sh
+      ln -s /usr/x86_64-pc-linux-gnu/avr/lib/ldscripts /usr/avr/lib/ldscripts
+    #+END_SRC
+** Customizing qmk-firmware
+   Clone the repository [https://github.com/wilderjds/qmk_firmware]
+
+*** Issues
+    It turns out that crossdev needs to have its own overlay; we follow the recipies at
+    [https://wiki.gentoo.org/wiki/Custom_repository#Crossdev]
+    #+BEGIN_SRC sh
+       mkdir -p /usr/local/portage-crossdev/{profiles,metadata};
+       echo 'crossdev' > /usr/local/portage-crossdev/profiles/repo_name
+       echo 'masters = gentoo' > /usr/local/portage-crossdev/metadata/layout.conf
+       chown -R portage:portage /usr/local/portage-crossdev
+    #+END_SRC
+
+* Build
+** DONE Modding the springs in 10 switches
+** TODO assembling stabilizers (to lube or not to lube?)
+** TODO fixing switches to the plate
+** TODO Testing diodes
+** TODO tape them together

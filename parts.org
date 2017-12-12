@@ -1,0 +1,7 @@
+* Screws: M2 0.4 x 4 mm is the standard with pok3r
+  Maybe these ones?
+  http://www.homedepot.com/p/Crown-Bolt-M2-32-x-4-mm-Internal-Hex-Socket-Cap-Head-Cap-Screws-3-Pack-07968/203538789
+* Washers
+* Switches:
+** R1–4 Tactile gray (~80cN)
+** R5 Tactile "super-"gray" (around ~110cN)
