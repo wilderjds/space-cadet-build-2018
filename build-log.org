@@ -1,8 +1,11 @@
+# -*- fill-column:78 -*-
 #+TITLE: Build log for the space cadet
 [[./space-cadet-logo.png]]
 * Design
 ** Principles
-   A thumb cluster + the side keys to be used with hand sides
+   A non-split keyboard with a centered “thumb cluster” and side ~Fn~ keys.
+   Modifiers serve double duty (à la ~xcape~, although I currently employ a
+   combination of ~xcape~ and a patched ~evdev~ driver).
 ** KLE
    [http://www.keyboard-layout-editor.com/#/gists/8cf0cf258ae6fa748e577d7ed8d71517]
 [[./watch-the-gap.png]]
