@@ -60,8 +60,14 @@
 
 * Programming the controller
 ** Tools for flashing
-   There is a CLI interface available at [https://github.com/PaulStoffregen/teensy_loader_cli] and a GUI at
-   [https://www.pjrc.com/teensy/loader_linux.html]; unclear if the sources are available
+   There is a CLI interface available at
+   [https://github.com/PaulStoffregen/teensy_loader_cli] and a GUI at
+   [https://www.pjrc.com/teensy/loader_linux.html]; unclear if the sources are
+   available.
+*** Binary blob
+    the binary blob found at [https://www.pjrc.com/teensy/loader_linux.html]
+    seems to work.  There is a disclaimer that says that the toolchain for
+    gentoo does not work; it appears to work in fact.
 ** Emerging the cross-compilation
    Following the guide at [https://wiki.gentoo.org/wiki/Arduino#Install_the_toolchain_using_crossdev]
    We need to set up a cross-compilation environment; this can be done by emerging the package
